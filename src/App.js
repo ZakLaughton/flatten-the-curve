@@ -22,16 +22,33 @@ function App() {
     const y = location[1];
     const newX = x + Math.floor(Math.random() * 3 - 1);
     const newY = y + Math.floor(Math.random() * 3 - 1);
-    if (newX < 0 || newX >= gridSize || newY < 0 || newY >= gridSize) return location;
+    if (
+      newX < 0 ||
+      newX >= gridSize ||
+      newY < 0 ||
+      newY >= gridSize ||
+      people.some(person => person.location === [newX, newY])
+    )
+      return location;
     return [newX, newY];
   };
 
   const movePeople = () => {
-    const newPeople = people.map(person => {
-      return {
-        location: calculateMove(person.location)
-      };
-    });
+    const newPeople = people.reduce((newPeople, person, index) => {
+      const newLocation = calculateMove(person.location);
+
+      if (
+        newPeople.some(
+          person => person.location[0] === newLocation[0] && person.location[1] === newLocation[1]
+        )
+      ) {
+        newPeople[index] = person;
+      } else {
+        newPeople[index] = { location: newLocation };
+      }
+
+      return newPeople;
+    }, people);
     setState({ people: newPeople });
   };
 
@@ -53,10 +70,6 @@ function App() {
     });
     setState({ people });
   };
-
-  useEffect(() => {
-    generateInitialPositions();
-  }, []);
 
   useEffect(() => {
     generateInitialPositions();

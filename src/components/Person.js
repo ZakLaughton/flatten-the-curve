@@ -12,8 +12,8 @@ const PersonCircle = styled(motion.span)`
   background-color: red;
   border-radius: 50%;
   position: absolute;
-  bottom: ${props => `${props.position[0]}px`};
-  left: ${props => `${props.position[1]}px`};
+  left: ${props => `${props.position[0]}px`};
+  bottom: ${props => `${props.position[1]}px`};
 `;
 
 export default Person;
