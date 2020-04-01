@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Person from './Person';
 import styled from 'styled-components';
-import { GameContext } from '../index';
 
-function GameBoard({ boardSize, cellSize }) {
-  const [state, dispatch] = useContext(GameContext);
-  const { people } = state;
-
+function GameBoard({ boardSize, cellSize, people, movePeople }) {
   return (
-    <Board size={boardSize} onClick={() => dispatch({ type: 'MOVE_PEOPLE' })}>
+    <Board size={boardSize} onClick={movePeople}>
       {people.map((person, index) => (
         <Person
           key={index}

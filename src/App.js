@@ -1,15 +1,33 @@
-import React, { useReducer, createContext, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import GameBoard from './components/GameBoard';
 import { shuffleArray } from './utils/utils';
 import { GameContext } from './index';
 import './App.css';
 
 function App() {
-  const [state, dispatch] = useContext(GameContext);
   const gridSize = 10;
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
   const numberOfPeople = 50;
+
+  const initialState = {
+    people: []
+  };
+
+  const [state, setState] = useState(initialState);
+  const { people } = state;
+
+  const movePeople = () => {
+    const newPeople = people.map(person => {
+      return {
+        location: [
+          person.location[0] + Math.floor(Math.random() * 3 - 1),
+          person.location[1] + Math.floor(Math.random() * 3 - 1)
+        ]
+      };
+    });
+    setState({ people: newPeople });
+  };
 
   const generateAllPositions = () => {
     let positionList = [];
@@ -21,19 +39,30 @@ function App() {
     return positionList;
   };
 
-  const allPositions = generateAllPositions();
   const generateInitialPositions = () => {
+    const allPositions = generateAllPositions();
     let shuffledLocations = shuffleArray(allPositions);
     const people = shuffledLocations.slice(0, numberOfPeople).map(location => {
       return { location };
     });
-    dispatch({ type: 'SET_PEOPLE', payload: people });
+    setState({ people });
   };
 
   useEffect(() => {
     generateInitialPositions();
   }, []);
 
-  return <GameBoard boardSize={boardSize} cellSize={cellSize} />;
+  useEffect(() => {
+    generateInitialPositions();
+  }, []);
+
+  return (
+    <GameBoard
+      boardSize={boardSize}
+      cellSize={cellSize}
+      movePeople={movePeople}
+      people={state.people}
+    />
+  );
 }
 export default App;
