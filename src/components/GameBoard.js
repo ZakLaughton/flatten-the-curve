@@ -7,18 +7,23 @@ function GameBoard() {
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
 
-  const [personLocation, setLocation] = useState([0, 0]);
-  const moveLocation = () => {
-    setLocation([0, 5]);
+  const [people, setPeople] = useState([{ location: [0, 0] }, { location: [0, 5] }]);
+  const movePeople = () => {
+    const newPeople = people.map(person => {
+      return { location: [person.location[0] + 5, person.location[1]] };
+    });
+    console.log('newPeople:', newPeople);
+    setPeople(newPeople);
   };
 
   return (
-    <Board size={boardSize}>
-      <Person
-        size={cellSize}
-        position={[personLocation[0] * cellSize, personLocation[1] * cellSize]}
-        move={moveLocation}
-      />
+    <Board size={boardSize} onClick={movePeople}>
+      {people.map(person => (
+        <Person
+          size={cellSize}
+          position={[person.location[0] * cellSize, person.location[1] * cellSize]}
+        />
+      ))}
     </Board>
   );
 }
