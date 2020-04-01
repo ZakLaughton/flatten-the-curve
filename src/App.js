@@ -17,13 +17,19 @@ function App() {
   const [state, setState] = useState(initialState);
   const { people } = state;
 
+  const calculateMove = location => {
+    const newLocation = [
+      location[0] + Math.floor(Math.random() * 3 - 1),
+      location[1] + Math.floor(Math.random() * 3 - 1)
+    ];
+
+    return newLocation;
+  };
+
   const movePeople = () => {
     const newPeople = people.map(person => {
       return {
-        location: [
-          person.location[0] + Math.floor(Math.random() * 3 - 1),
-          person.location[1] + Math.floor(Math.random() * 3 - 1)
-        ]
+        location: calculateMove(person.location)
       };
     });
     setState({ people: newPeople });
