@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Person from './Person';
 import styled from 'styled-components';
 
@@ -7,12 +7,18 @@ function GameBoard() {
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
 
-  const personLocationX = 0;
-  const personLocationY = 0;
+  const [personLocation, setLocation] = useState([0, 0]);
+  const moveLocation = () => {
+    setLocation([0, 5]);
+  };
 
   return (
     <Board size={boardSize}>
-      <Person size={cellSize} position={[personLocationX * cellSize, personLocationY * cellSize]} />
+      <Person
+        size={cellSize}
+        position={[personLocation[0] * cellSize, personLocation[1] * cellSize]}
+        move={moveLocation}
+      />
     </Board>
   );
 }

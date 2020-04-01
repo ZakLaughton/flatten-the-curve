@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Person({ size, position }) {
-  return <PersonCircle size={size} position={position} />;
+function Person({ size, position, move }) {
+  return <PersonCircle size={size} position={position} onClick={move} />;
 }
 
 const PersonCircle = styled.span`
@@ -11,7 +11,7 @@ const PersonCircle = styled.span`
   background-color: red;
   border-radius: 50%;
   position: absolute;
-  top: ${props => `${props.position[0]}px`};
+  bottom: ${props => `${props.position[0]}px`};
   left: ${props => `${props.position[1]}px`};
 `;
 
