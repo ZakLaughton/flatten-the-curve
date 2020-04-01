@@ -18,12 +18,12 @@ function App() {
   const { people } = state;
 
   const calculateMove = location => {
-    const newLocation = [
-      location[0] + Math.floor(Math.random() * 3 - 1),
-      location[1] + Math.floor(Math.random() * 3 - 1)
-    ];
-
-    return newLocation;
+    const x = location[0];
+    const y = location[1];
+    const newX = x + Math.floor(Math.random() * 3 - 1);
+    const newY = y + Math.floor(Math.random() * 3 - 1);
+    if (newX < 0 || newX >= gridSize || newY < 0 || newY >= gridSize) return location;
+    return [newX, newY];
   };
 
   const movePeople = () => {
