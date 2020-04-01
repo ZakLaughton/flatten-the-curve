@@ -1,9 +1,9 @@
 import React from 'react';
-import GameCanvas from './components/GameCanvas';
+import GameBoard from './components/GameBoard';
 import './App.css';
 
 function App() {
-  return <GameCanvas />;
+  return <GameBoard />;
 }
 
 export default App;
