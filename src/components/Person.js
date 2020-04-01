@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 function Person({ size, position, move }) {
-  return <PersonCircle size={size} position={position} onClick={move} />;
+  return <PersonCircle positionTransition size={size} position={position} onClick={move} />;
 }
 
-const PersonCircle = styled.span`
+const PersonCircle = styled(motion.span)`
   height: ${props => `${props.size}px`};
   width: ${props => `${props.size}px`};
   background-color: red;
