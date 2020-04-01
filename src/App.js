@@ -1,7 +1,6 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react';
 import GameBoard from './components/GameBoard';
 import { shuffleArray } from './utils/utils';
-import Reducer from './Reducer';
 import { GameContext } from './index';
 import './App.css';
 
