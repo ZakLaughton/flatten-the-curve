@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { createContext, useReducer } from 'react';
+import Reducer from './Reducer';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+const initialState = {
+  people: []
+};
+
+export const GameContext = createContext(initialState);
+
+const Store = ({ children }) => {
+  const [state, dispatch] = useReducer(Reducer, initialState);
+  return <GameContext.Provider value={[state, dispatch]}>{children}</GameContext.Provider>;
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Store>
+      <App />
+    </Store>
   </React.StrictMode>,
   document.getElementById('root')
 );
