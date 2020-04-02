@@ -7,7 +7,7 @@ function App() {
   const gridSize = 10;
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
-  const numberOfPeople = 50;
+  const numberOfPeople = 10;
 
   const initialState = {
     people: []
@@ -18,10 +18,43 @@ function App() {
 
   const calculateMove = location => {
     const { x, y } = location;
-    const newX = x + Math.floor(Math.random() * 3 - 1);
-    const newY = y + Math.floor(Math.random() * 3 - 1);
-    if (newX < 0 || newX >= gridSize || newY < 0 || newY >= gridSize) return location;
+    let possibleMoves = [
+      { direction: 'N', coordinates: [0, 1] },
+      { direction: 'NE', coordinates: [1, 1] },
+      { direction: 'E', coordinates: [1, 0] },
+      { direction: 'SE', coordinates: [1, -1] },
+      { direction: 'S', coordinates: [0, -1] },
+      { direction: 'SW', coordinates: [-1, -1] },
+      { direction: 'W', coordinates: [-1, 0] },
+      { direction: 'NW', coordinates: [-1, 1] }
+    ];
+
+    if (isOnLeftEdge(location))
+      possibleMoves = possibleMoves.filter(move => !['NW', 'W', 'SW'].includes(move.direction));
+    if (isOnBottomEdge(location))
+      possibleMoves = possibleMoves.filter(move => !['SW', 'S', 'SE'].includes(move.direction));
+    if (isOnRightEdge(location))
+      possibleMoves = possibleMoves.filter(move => !['SE', 'E', 'NE'].includes(move.direction));
+    if (isOnTopEdge(location))
+      possibleMoves = possibleMoves.filter(move => !['NE', 'N', 'NW'].includes(move.direction));
+
+    const newLocation = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+    const newX = x + newLocation.coordinates[0];
+    const newY = y + newLocation.coordinates[1];
     return { x: newX, y: newY };
+
+    function isOnLeftEdge(location) {
+      return location.x === 0;
+    }
+    function isOnBottomEdge(location) {
+      return location.y === 0;
+    }
+    function isOnRightEdge(location) {
+      return location.x === gridSize - 1;
+    }
+    function isOnTopEdge(location) {
+      return location.y === gridSize - 1;
+    }
   };
 
   const movePeople = () => {
