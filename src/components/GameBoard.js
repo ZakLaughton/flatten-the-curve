@@ -3,10 +3,6 @@ import Person from './Person';
 import styled from 'styled-components';
 
 function GameBoard({ boardSize, cellSize, people, movePeople }) {
-  console.log('cellSize: ', cellSize);
-
-  console.log('people: ', people);
-  console.log('boardSize: ', boardSize);
   return (
     <Board size={boardSize} onClick={movePeople}>
       {people.map((person, index) => (

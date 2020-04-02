@@ -69,7 +69,7 @@ function App() {
       ) {
         newPeople[index] = person;
       } else {
-        newPeople[index] = { location: newLocation };
+        newPeople[index] = { ...person, location: newLocation };
       }
 
       return newPeople;
@@ -88,16 +88,25 @@ function App() {
   };
 
   useEffect(() => {
-    const generateInitialPositions = () => {
+    const generateInitialPeople = () => {
       const allPositions = generateAllPositions();
       let shuffledLocations = shuffleArray(allPositions);
       const people = shuffledLocations.slice(0, numberOfPeople).map(location => {
-        return { location };
+        return {
+          location,
+          isInfected: false,
+          isImmune: false,
+          isSymptomatic: false,
+          mobility: 'FREE'
+        };
       });
-      setState({ people });
+      return people;
     };
 
-    generateInitialPositions();
+    const initialPeople = generateInitialPeople();
+    const indexToInfect = Math.floor(Math.random() * initialPeople.length);
+    initialPeople[indexToInfect].isInfected = true;
+    setState({ people: initialPeople });
   }, []);
 
   return <GameBoard {...gameMetrics} people={state.people} movePeople={movePeople} />;
