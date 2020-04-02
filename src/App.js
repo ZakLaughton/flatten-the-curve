@@ -7,7 +7,7 @@ function App() {
   const gridSize = 10;
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
-  const numberOfPeople = 10;
+  const numberOfPeople = 50;
   const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
 
   const initialState = {
@@ -71,7 +71,7 @@ function App() {
   };
 
   const movePeople = () => {
-    const newPeople = people.reduce((newPeople, person, index) => {
+    const movedPeople = people.reduce((newPeople, person, index) => {
       const newLocation = calculateMove(person.location);
 
       if (
@@ -86,10 +86,35 @@ function App() {
 
       return newPeople;
     }, people);
-    setState({ people: newPeople });
+
+    const movedInfectedPeople = infect(movedPeople);
+    setState({ people: movedInfectedPeople });
   };
 
-  const infect = () => {};
+  const infect = people => {
+    const infectedPeople = people.filter(person => person.isInfected === true);
+    let infectionZones = infectedPeople.map(person => {
+      const neighborLocations = getSurroundingCells(person.location).map(
+        surroundingCell => surroundingCell.coordinates
+      );
+      return neighborLocations;
+    });
+    infectionZones = infectionZones.flat();
+    const newlyInfectedPeople = people.map(person => {
+      if (
+        infectionZones.some(
+          infectionZone =>
+            person.location.x === infectionZone.x && person.location.y === infectionZone.y
+        )
+      ) {
+        person.isInfected = true;
+      }
+      return person;
+    });
+    console.log('newlyInfectedPeople: ', newlyInfectedPeople);
+
+    return newlyInfectedPeople;
+  };
 
   const generateAllPositions = () => {
     let positionList = [];
@@ -105,8 +130,9 @@ function App() {
     const generateInitialPeople = () => {
       const allPositions = generateAllPositions();
       let shuffledLocations = shuffleArray(allPositions);
-      const people = shuffledLocations.slice(0, numberOfPeople).map(location => {
+      const people = shuffledLocations.slice(0, numberOfPeople).map((location, index) => {
         return {
+          id: index,
           location,
           isInfected: false,
           isImmune: false,
