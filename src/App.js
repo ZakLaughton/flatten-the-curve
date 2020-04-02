@@ -4,10 +4,10 @@ import { shuffleArray } from './utils/utils';
 import './App.css';
 
 function App() {
-  const gridSize = 10;
+  const gridSize = 35;
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
-  const numberOfPeople = 50;
+  const numberOfPeople = 500;
   const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
 
   const initialState = {
@@ -94,9 +94,10 @@ function App() {
   const infect = people => {
     const infectedPeople = people.filter(person => person.isInfected === true);
     let infectionZones = infectedPeople.map(person => {
-      const neighborLocations = getSurroundingCells(person.location).map(
-        surroundingCell => surroundingCell.coordinates
-      );
+      const neighborLocations = getSurroundingCells(person.location)
+        .filter(location => ['N', 'E', 'S', 'W'].includes(location.direction))
+        .map(surroundingCell => surroundingCell.coordinates);
+
       return neighborLocations;
     });
     infectionZones = infectionZones.flat();
@@ -111,7 +112,6 @@ function App() {
       }
       return person;
     });
-    console.log('newlyInfectedPeople: ', newlyInfectedPeople);
 
     return newlyInfectedPeople;
   };
