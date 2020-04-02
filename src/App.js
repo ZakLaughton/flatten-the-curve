@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GameBoard from './components/GameBoard';
 import { shuffleArray } from './utils/utils';
-import { GameContext } from './index';
 import './App.css';
 
 function App() {
@@ -18,19 +17,11 @@ function App() {
   const { people } = state;
 
   const calculateMove = location => {
-    const x = location[0];
-    const y = location[1];
+    const { x, y } = location;
     const newX = x + Math.floor(Math.random() * 3 - 1);
     const newY = y + Math.floor(Math.random() * 3 - 1);
-    if (
-      newX < 0 ||
-      newX >= gridSize ||
-      newY < 0 ||
-      newY >= gridSize ||
-      people.some(person => person.location === [newX, newY])
-    )
-      return location;
-    return [newX, newY];
+    if (newX < 0 || newX >= gridSize || newY < 0 || newY >= gridSize) return location;
+    return { x: newX, y: newY };
   };
 
   const movePeople = () => {
@@ -39,7 +30,7 @@ function App() {
 
       if (
         newPeople.some(
-          person => person.location[0] === newLocation[0] && person.location[1] === newLocation[1]
+          person => person.location.x === newLocation.x && person.location.y === newLocation.y
         )
       ) {
         newPeople[index] = person;
@@ -56,22 +47,22 @@ function App() {
     let positionList = [];
     for (let x = 0; x < gridSize; x++) {
       for (let y = 0; y < gridSize; y++) {
-        positionList.push([x, y]);
+        positionList.push({ x, y });
       }
     }
     return positionList;
   };
 
-  const generateInitialPositions = () => {
-    const allPositions = generateAllPositions();
-    let shuffledLocations = shuffleArray(allPositions);
-    const people = shuffledLocations.slice(0, numberOfPeople).map(location => {
-      return { location };
-    });
-    setState({ people });
-  };
-
   useEffect(() => {
+    const generateInitialPositions = () => {
+      const allPositions = generateAllPositions();
+      let shuffledLocations = shuffleArray(allPositions);
+      const people = shuffledLocations.slice(0, numberOfPeople).map(location => {
+        return { location };
+      });
+      setState({ people });
+    };
+
     generateInitialPositions();
   }, []);
 

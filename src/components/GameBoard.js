@@ -9,7 +9,7 @@ function GameBoard({ boardSize, cellSize, people, movePeople }) {
         <Person
           key={index}
           size={cellSize}
-          position={[person.location[0] * cellSize, person.location[1] * cellSize]}
+          position={[person.location.x * cellSize, person.location.y * cellSize]}
         />
       ))}
     </Board>
