@@ -17,11 +17,12 @@ function Person({ size, position, move, personData }) {
 const PersonCircle = styled(motion.span)`
   height: ${props => `${props.size}px`};
   width: ${props => `${props.size}px`};
-  background-color: ${props => (props.isInfected ? 'green' : 'red')};
+  background-color: ${props => (props.isInfected ? '#448844' : 'white')};
   border-radius: 50%;
   position: absolute;
   left: ${props => `${props.position[0]}px`};
   bottom: ${props => `${props.position[1]}px`};
+  border: 1px solid black;
 `;
 
 export default Person;

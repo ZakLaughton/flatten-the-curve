@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 function GameBoard({ boardSize, cellSize, people, movePeople }) {
   return (
-    <Board size={boardSize} onClick={movePeople}>
+    <Board size={boardSize} onClick={() => setInterval(movePeople, 300)}>
       {people.map((person, index) => (
         <Person
           personData={person}

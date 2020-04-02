@@ -4,10 +4,11 @@ import { shuffleArray } from './utils/utils';
 import './App.css';
 
 function App() {
-  const gridSize = 35;
-  const boardSize = 1000;
+  const gridSize = 25;
+  const boardSize = 700;
   const cellSize = boardSize / gridSize;
-  const numberOfPeople = 500;
+  const peopleDensity = 0.2;
+  const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity);
   const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
 
   const initialState = {
