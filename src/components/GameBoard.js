@@ -7,6 +7,7 @@ function GameBoard({ boardSize, cellSize, people, movePeople }) {
     <Board size={boardSize} onClick={movePeople}>
       {people.map((person, index) => (
         <Person
+          personData={person}
           key={index}
           size={cellSize}
           position={[person.location.x * cellSize, person.location.y * cellSize]}
