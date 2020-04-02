@@ -17,32 +17,37 @@ function App() {
   const [state, setState] = useState(initialState);
   const { people } = state;
 
-  const calculateMove = location => {
+  function getSurroundingCells(location) {
     const { x, y } = location;
-    let possibleMoves = [
-      { direction: 'N', coordinates: [0, 1] },
-      { direction: 'NE', coordinates: [1, 1] },
-      { direction: 'E', coordinates: [1, 0] },
-      { direction: 'SE', coordinates: [1, -1] },
-      { direction: 'S', coordinates: [0, -1] },
-      { direction: 'SW', coordinates: [-1, -1] },
-      { direction: 'W', coordinates: [-1, 0] },
-      { direction: 'NW', coordinates: [-1, 1] }
+    let surroundingCells = [
+      { direction: 'N', coordinates: { x: x + 0, y: y + 1 } },
+      { direction: 'NE', coordinates: { x: x + 1, y: y + 1 } },
+      { direction: 'E', coordinates: { x: x + 1, y: y + 0 } },
+      { direction: 'SE', coordinates: { x: x + 1, y: y - 1 } },
+      { direction: 'S', coordinates: { x: x + 0, y: y - 1 } },
+      { direction: 'SW', coordinates: { x: x - 1, y: y - 1 } },
+      { direction: 'W', coordinates: { x: x - 1, y: y + 0 } },
+      { direction: 'NW', coordinates: { x: x - 1, y: y + 1 } }
     ];
 
     if (isOnLeftEdge(location))
-      possibleMoves = possibleMoves.filter(move => !['NW', 'W', 'SW'].includes(move.direction));
+      surroundingCells = surroundingCells.filter(
+        move => !['NW', 'W', 'SW'].includes(move.direction)
+      );
     if (isOnBottomEdge(location))
-      possibleMoves = possibleMoves.filter(move => !['SW', 'S', 'SE'].includes(move.direction));
+      surroundingCells = surroundingCells.filter(
+        move => !['SW', 'S', 'SE'].includes(move.direction)
+      );
     if (isOnRightEdge(location))
-      possibleMoves = possibleMoves.filter(move => !['SE', 'E', 'NE'].includes(move.direction));
+      surroundingCells = surroundingCells.filter(
+        move => !['SE', 'E', 'NE'].includes(move.direction)
+      );
     if (isOnTopEdge(location))
-      possibleMoves = possibleMoves.filter(move => !['NE', 'N', 'NW'].includes(move.direction));
+      surroundingCells = surroundingCells.filter(
+        move => !['NE', 'N', 'NW'].includes(move.direction)
+      );
 
-    const newLocation = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    const newX = x + newLocation.coordinates[0];
-    const newY = y + newLocation.coordinates[1];
-    return { x: newX, y: newY };
+    return surroundingCells;
 
     function isOnLeftEdge(location) {
       return location.x === 0;
@@ -56,6 +61,13 @@ function App() {
     function isOnTopEdge(location) {
       return location.y === gridSize - 1;
     }
+  }
+
+  const calculateMove = location => {
+    const possibleMoves = getSurroundingCells(location);
+    const newLocation = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+    return newLocation.coordinates;
   };
 
   const movePeople = () => {
@@ -76,6 +88,8 @@ function App() {
     }, people);
     setState({ people: newPeople });
   };
+
+  const infect = () => {};
 
   const generateAllPositions = () => {
     let positionList = [];
