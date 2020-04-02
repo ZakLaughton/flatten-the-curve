@@ -8,6 +8,7 @@ function App() {
   const boardSize = 1000;
   const cellSize = boardSize / gridSize;
   const numberOfPeople = 10;
+  const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
 
   const initialState = {
     people: []
@@ -99,13 +100,6 @@ function App() {
     generateInitialPositions();
   }, []);
 
-  return (
-    <GameBoard
-      boardSize={boardSize}
-      cellSize={cellSize}
-      movePeople={movePeople}
-      people={state.people}
-    />
-  );
+  return <GameBoard {...gameMetrics} people={state.people} movePeople={movePeople} />;
 }
 export default App;
