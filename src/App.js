@@ -109,6 +109,7 @@ function App() {
       .map(person => person.id);
     peopleCopy = peopleCopy.map(person => {
       if (peopleToRecover.includes(person.id)) person.isCured = true;
+      return person;
     });
     const infectedPeople = people.filter(person => person.infectedDay >= 0 && !person.isCured);
     let infectionZones = infectedPeople.map(person => {
@@ -169,14 +170,21 @@ function App() {
     setPeople(initialPeople);
   }, []);
 
+  const infectedPeopleCount = people.filter(person => !person.isCured && person.infectedDay >= 0)
+    .length;
+  const curedPeopleCount = people.filter(person => person.isCured).length;
   return (
-    <GameBoard
-      {...gameMetrics}
-      people={people}
-      movePeople={movePeople}
-      setPersonSociallyDistanced={setPersonSociallyDistanced}
-      day={day}
-    />
+    <>
+      <GameBoard
+        {...gameMetrics}
+        people={people}
+        movePeople={movePeople}
+        setPersonSociallyDistanced={setPersonSociallyDistanced}
+        day={day}
+      />
+      <p>Infected: {infectedPeopleCount}</p>
+      <p>Recovered: {curedPeopleCount}</p>
+    </>
   );
 }
 export default App;
