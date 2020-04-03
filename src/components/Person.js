@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-function Person({ size, position, personData, setPersonSociallyDistanced, day }) {
+function Person({ size, position, personData, setPersonMobility, day }) {
   const { id, infectedDay, isCured } = personData;
   const isSymptomatic = !isCured && infectedDay >= 0 && day - infectedDay >= 5;
   const handleClick = () => {
-    setPersonSociallyDistanced(id);
+    if (isSymptomatic) setPersonMobility(id, 'QUARANTINED');
+    if (!isSymptomatic) setPersonMobility(id, 'SOCIALLY_DISTANCED');
   };
   return (
     <>
@@ -20,6 +21,9 @@ function Person({ size, position, personData, setPersonSociallyDistanced, day })
       />
       {personData.mobility === 'SOCIALLY_DISTANCED' && (
         <SociallyDistancedSquare size={size} position={position} {...personData} />
+      )}
+      {personData.mobility === 'QUARANTINED' && (
+        <QuarantinedSquare size={size} position={position} {...personData} />
       )}
     </>
   );
@@ -45,6 +49,16 @@ const SociallyDistancedSquare = styled.div`
   left: ${props => `${props.position[0]}px`};
   bottom: ${props => `${props.position[1]}px`};
   border: 2px dashed black;
+  box-sizing: border-box;
+`;
+
+const QuarantinedSquare = styled.div`
+  height: ${props => `${props.size}px`};
+  width: ${props => `${props.size}px`};
+  position: absolute;
+  left: ${props => `${props.position[0]}px`};
+  bottom: ${props => `${props.position[1]}px`};
+  border: 3px solid black;
   box-sizing: border-box;
 `;
 

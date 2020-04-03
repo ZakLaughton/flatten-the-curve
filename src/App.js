@@ -17,10 +17,10 @@ function App() {
     setDay(day + 1);
     movePeople();
   }
-  function setPersonSociallyDistanced(id) {
+  function setPersonMobility(id, mobility) {
     const newPeople = [...people];
     const personIndex = people.findIndex(person => person.id === id);
-    newPeople[personIndex].mobility = 'SOCIALLY_DISTANCED';
+    newPeople[personIndex].mobility = mobility;
     setPeople(newPeople);
     goToNextDay();
   }
@@ -80,7 +80,7 @@ function App() {
 
   const movePeople = () => {
     const movedPeople = people.reduce((newPeople, person, index) => {
-      if (person.mobility === 'SOCIALLY_DISTANCED') return newPeople;
+      if (['SOCIALLY_DISTANCED', 'QUARANTINED'].includes(person.mobility)) return newPeople;
       const newLocation = calculateMove(person.location);
 
       if (
@@ -179,7 +179,7 @@ function App() {
         {...gameMetrics}
         people={people}
         movePeople={movePeople}
-        setPersonSociallyDistanced={setPersonSociallyDistanced}
+        setPersonMobility={setPersonMobility}
         day={day}
       />
       <p>Infected: {infectedPeopleCount}</p>

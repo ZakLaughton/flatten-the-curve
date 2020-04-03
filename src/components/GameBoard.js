@@ -2,7 +2,7 @@ import React from 'react';
 import Person from './Person';
 import styled from 'styled-components';
 
-function GameBoard({ boardSize, cellSize, people, movePeople, setPersonSociallyDistanced, day }) {
+function GameBoard({ boardSize, cellSize, people, movePeople, setPersonMobility, day }) {
   return (
     <Board
       size={boardSize}
@@ -18,7 +18,7 @@ function GameBoard({ boardSize, cellSize, people, movePeople, setPersonSociallyD
           key={index}
           size={cellSize}
           position={[person.location.x * cellSize, person.location.y * cellSize]}
-          setPersonSociallyDistanced={setPersonSociallyDistanced}
+          setPersonMobility={setPersonMobility}
           day={day}
         />
       ))}
