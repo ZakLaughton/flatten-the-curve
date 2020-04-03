@@ -112,6 +112,7 @@ function App() {
     infectionZones = infectionZones.flat();
     const newlyInfectedPeople = people.map(person => {
       if (
+        person.infectedDay === -1 &&
         infectionZones.some(
           infectionZone =>
             person.location.x === infectionZone.x && person.location.y === infectionZone.y
@@ -145,8 +146,7 @@ function App() {
           id: index,
           location,
           infectedDay: -1,
-          isImmune: false,
-          isSymptomatic: false,
+          isCured: false,
           mobility: 'FREE'
         };
       });
@@ -165,6 +165,7 @@ function App() {
       people={people}
       movePeople={movePeople}
       setPersonSociallyDistanced={setPersonSociallyDistanced}
+      day={day}
     />
   );
 }
