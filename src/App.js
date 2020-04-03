@@ -13,11 +13,16 @@ function App() {
   const [people, setPeople] = useState([]);
   const [day, setDay] = useState(0);
 
+  function goToNextDay() {
+    setDay(day + 1);
+    movePeople();
+  }
   function setPersonSociallyDistanced(id) {
     const newPeople = [...people];
     const personIndex = people.findIndex(person => person.id === id);
     newPeople[personIndex].mobility = 'SOCIALLY_DISTANCED';
     setPeople(newPeople);
+    goToNextDay();
   }
 
   function getSurroundingCells(location) {
