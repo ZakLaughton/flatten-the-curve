@@ -11,7 +11,7 @@ function Person({ size, position, personData, setPersonSociallyDistanced, day })
   return (
     <>
       <PersonCircle
-        positionTransition
+        positionTransition={{ duration: 1 }}
         size={size}
         position={position}
         onClick={handleClick}
