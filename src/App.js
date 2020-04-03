@@ -111,8 +111,11 @@ function App() {
       if (peopleToRecover.includes(person.id)) person.isCured = true;
       return person;
     });
-    const infectedPeople = people.filter(person => person.infectedDay >= 0 && !person.isCured);
-    let infectionZones = infectedPeople.map(person => {
+
+    const contagiousPeople = people.filter(
+      person => person.infectedDay >= 0 && !person.isCured && person.mobility !== 'QUARANTINED'
+    );
+    let infectionZones = contagiousPeople.map(person => {
       const neighborLocations = getSurroundingCells(person.location)
         .filter(location => ['N', 'E', 'S', 'W'].includes(location.direction))
         .map(surroundingCell => surroundingCell.coordinates);
