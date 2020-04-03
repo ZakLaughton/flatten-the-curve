@@ -101,7 +101,16 @@ function App() {
   };
 
   const infect = people => {
-    const infectedPeople = people.filter(person => person.infectedDay >= 0);
+    let peopleCopy = [...people];
+    const peopleToRecover = peopleCopy
+      .filter(
+        person => person.infectedDay !== -1 && !person.isCured && day - person.infectedDay > 19
+      )
+      .map(person => person.id);
+    peopleCopy = peopleCopy.map(person => {
+      if (peopleToRecover.includes(person.id)) person.isCured = true;
+    });
+    const infectedPeople = people.filter(person => person.infectedDay >= 0 && !person.isCured);
     let infectionZones = infectedPeople.map(person => {
       const neighborLocations = getSurroundingCells(person.location)
         .filter(location => ['N', 'E', 'S', 'W'].includes(location.direction))

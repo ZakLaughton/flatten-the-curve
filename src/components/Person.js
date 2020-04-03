@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 function Person({ size, position, personData, setPersonSociallyDistanced, day }) {
-  const { id, infectedDay } = personData;
-  const isSymptomatic = infectedDay >= 0 && day - infectedDay >= 5;
+  const { id, infectedDay, isCured } = personData;
+  const isSymptomatic = !isCured && infectedDay >= 0 && day - infectedDay >= 5;
   const handleClick = () => {
     setPersonSociallyDistanced(id);
   };
@@ -16,6 +16,7 @@ function Person({ size, position, personData, setPersonSociallyDistanced, day })
         position={position}
         onClick={handleClick}
         isSymptomatic={isSymptomatic}
+        isCured={isCured}
       />
       {personData.mobility === 'SOCIALLY_DISTANCED' && (
         <SociallyDistancedSquare size={size} position={position} {...personData} />
@@ -27,7 +28,8 @@ function Person({ size, position, personData, setPersonSociallyDistanced, day })
 const PersonCircle = styled(motion.span)`
   height: ${props => `${props.size}px`};
   width: ${props => `${props.size}px`};
-  background-color: ${props => (props.isSymptomatic ? '#448844' : 'white')};
+  background-color: ${props =>
+    props.isCured ? '#57c1ff' : props.isSymptomatic ? '#448844' : 'white'};
   border-radius: 50%;
   position: absolute;
   left: ${props => `${props.position[0]}px`};
