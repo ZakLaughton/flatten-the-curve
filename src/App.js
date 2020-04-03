@@ -8,10 +8,10 @@ function App() {
   const boardSize = 700;
   const cellSize = boardSize / gridSize;
   const peopleDensity = 0.2;
-  const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity) || 4;
-  const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
+  const gameMetrics = { gridSize, boardSize, cellSize };
 
   const [people, setPeople] = useState([]);
+  const [day, setDay] = useState(0);
 
   function setPersonSociallyDistanced(id) {
     const newPeople = [...people];
@@ -96,7 +96,7 @@ function App() {
   };
 
   const infect = people => {
-    const infectedPeople = people.filter(person => person.isInfected === true);
+    const infectedPeople = people.filter(person => person.infectedDay >= 0);
     let infectionZones = infectedPeople.map(person => {
       const neighborLocations = getSurroundingCells(person.location)
         .filter(location => ['N', 'E', 'S', 'W'].includes(location.direction))
@@ -112,7 +112,7 @@ function App() {
             person.location.x === infectionZone.x && person.location.y === infectionZone.y
         )
       ) {
-        person.isInfected = true;
+        person.infectedDay = day;
       }
       return person;
     });
@@ -131,6 +131,7 @@ function App() {
   };
 
   useEffect(() => {
+    const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity) || 4;
     const generateInitialPeople = () => {
       const allPositions = generateAllPositions();
       let shuffledLocations = shuffleArray(allPositions);
@@ -138,7 +139,7 @@ function App() {
         return {
           id: index,
           location,
-          isInfected: false,
+          infectedDay: -1,
           isImmune: false,
           isSymptomatic: false,
           mobility: 'FREE'
@@ -149,7 +150,7 @@ function App() {
 
     const initialPeople = generateInitialPeople();
     const indexToInfect = Math.floor(Math.random() * initialPeople.length);
-    initialPeople[indexToInfect].isInfected = true;
+    initialPeople[indexToInfect].infectedDay = day;
     setPeople(initialPeople);
   }, []);
 

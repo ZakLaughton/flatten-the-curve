@@ -27,7 +27,7 @@ function Person({ size, position, move, personData, setPersonSociallyDistanced }
 const PersonCircle = styled(motion.span)`
   height: ${props => `${props.size}px`};
   width: ${props => `${props.size}px`};
-  background-color: ${props => (props.isInfected ? '#448844' : 'white')};
+  background-color: ${props => (props.infectedDay >= 0 ? '#448844' : 'white')};
   border-radius: 50%;
   position: absolute;
   left: ${props => `${props.position[0]}px`};
