@@ -2,15 +2,16 @@ import React from 'react';
 import Person from './Person';
 import styled from 'styled-components';
 
-function GameBoard({ boardSize, cellSize, people, movePeople }) {
+function GameBoard({ boardSize, cellSize, people, movePeople, setPersonSociallyDistanced }) {
   return (
-    <Board size={boardSize} onClick={() => setInterval(movePeople, 300)}>
+    <Board size={boardSize} onClick={() => setInterval(movePeople, 400)}>
       {people.map((person, index) => (
         <Person
           personData={person}
           key={index}
           size={cellSize}
           position={[person.location.x * cellSize, person.location.y * cellSize]}
+          setPersonSociallyDistanced={setPersonSociallyDistanced}
         />
       ))}
     </Board>

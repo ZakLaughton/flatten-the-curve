@@ -2,15 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-function Person({ size, position, move, personData }) {
+function Person({ size, position, move, personData, setPersonSociallyDistanced }) {
+  const { id } = personData;
+  const handleRightClick = () => {
+    setPersonSociallyDistanced(id);
+  };
   return (
-    <PersonCircle
-      positionTransition
-      {...personData}
-      size={size}
-      position={position}
-      onClick={move}
-    />
+    <>
+      <PersonCircle
+        positionTransition
+        {...personData}
+        size={size}
+        position={position}
+        onClick={move}
+        onContextMenu={e => {
+          e.preventDefault();
+          handleRightClick();
+        }}
+      />
+      {personData.mobility === 'SOCIALLY_DISTANCED' && (
+        <SociallyDistancedSquare size={size} position={position} {...personData} />
+      )}
+    </>
   );
 }
 
@@ -23,6 +36,17 @@ const PersonCircle = styled(motion.span)`
   left: ${props => `${props.position[0]}px`};
   bottom: ${props => `${props.position[1]}px`};
   border: 1px solid black;
+  box-sizing: border-box;
+`;
+
+const SociallyDistancedSquare = styled.div`
+  height: ${props => `${props.size}px`};
+  width: ${props => `${props.size}px`};
+  position: absolute;
+  left: ${props => `${props.position[0]}px`};
+  bottom: ${props => `${props.position[1]}px`};
+  border: 2px dashed black;
+  box-sizing: border-box;
 `;
 
 export default Person;

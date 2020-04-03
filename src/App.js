@@ -8,7 +8,7 @@ function App() {
   const boardSize = 700;
   const cellSize = boardSize / gridSize;
   const peopleDensity = 0.2;
-  const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity);
+  const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity) || 4;
   const gameMetrics = { gridSize, boardSize, cellSize, numberOfPeople };
 
   const initialState = {
@@ -17,6 +17,13 @@ function App() {
 
   const [state, setState] = useState(initialState);
   const { people } = state;
+
+  function setPersonSociallyDistanced(id) {
+    const newPeople = people;
+    const personIndex = people.findIndex(person => person.id === id);
+    newPeople[personIndex].mobility = 'SOCIALLY_DISTANCED';
+    setState({ people: newPeople });
+  }
 
   function getSurroundingCells(location) {
     const { x, y } = location;
@@ -73,6 +80,7 @@ function App() {
 
   const movePeople = () => {
     const movedPeople = people.reduce((newPeople, person, index) => {
+      if (person.mobility === 'SOCIALLY_DISTANCED') return newPeople;
       const newLocation = calculateMove(person.location);
 
       if (
@@ -150,6 +158,13 @@ function App() {
     setState({ people: initialPeople });
   }, []);
 
-  return <GameBoard {...gameMetrics} people={state.people} movePeople={movePeople} />;
+  return (
+    <GameBoard
+      {...gameMetrics}
+      people={state.people}
+      movePeople={movePeople}
+      setPersonSociallyDistanced={setPersonSociallyDistanced}
+    />
+  );
 }
 export default App;
