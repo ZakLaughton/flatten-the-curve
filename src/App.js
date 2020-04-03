@@ -14,7 +14,7 @@ function App() {
   const [people, setPeople] = useState([]);
 
   function setPersonSociallyDistanced(id) {
-    const newPeople = people;
+    const newPeople = [...people];
     const personIndex = people.findIndex(person => person.id === id);
     newPeople[personIndex].mobility = 'SOCIALLY_DISTANCED';
     setPeople(newPeople);

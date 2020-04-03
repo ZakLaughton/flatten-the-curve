@@ -8,7 +8,8 @@ function GameBoard({ boardSize, cellSize, people, movePeople, setPersonSociallyD
       size={boardSize}
       onContextMenu={e => {
         e.preventDefault();
-        setInterval(movePeople, 400);
+        // setInterval(movePeople, 400);
+        movePeople();
       }}
     >
       {people.map((person, index) => (
