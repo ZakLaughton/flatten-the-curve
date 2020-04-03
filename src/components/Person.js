@@ -48,7 +48,7 @@ const SociallyDistancedSquare = styled.div`
   position: absolute;
   left: ${props => `${props.position[0]}px`};
   bottom: ${props => `${props.position[1]}px`};
-  border: 2px dashed black;
+  border: 3px dashed #595959;
   box-sizing: border-box;
 `;
 

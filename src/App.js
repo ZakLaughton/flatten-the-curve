@@ -7,7 +7,7 @@ function App() {
   const gridSize = 25;
   const boardSize = 700;
   const cellSize = boardSize / gridSize;
-  const peopleDensity = 0.2;
+  const peopleDensity = 0.3;
   const gameMetrics = { gridSize, boardSize, cellSize };
 
   const [people, setPeople] = useState([]);
