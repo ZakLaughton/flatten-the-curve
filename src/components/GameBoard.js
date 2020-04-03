@@ -4,7 +4,13 @@ import styled from 'styled-components';
 
 function GameBoard({ boardSize, cellSize, people, movePeople, setPersonSociallyDistanced }) {
   return (
-    <Board size={boardSize} onClick={() => setInterval(movePeople, 400)}>
+    <Board
+      size={boardSize}
+      onContextMenu={e => {
+        e.preventDefault();
+        setInterval(movePeople, 400);
+      }}
+    >
       {people.map((person, index) => (
         <Person
           personData={person}

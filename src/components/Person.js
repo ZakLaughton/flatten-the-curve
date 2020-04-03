@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 function Person({ size, position, move, personData, setPersonSociallyDistanced }) {
   const { id } = personData;
-  const handleRightClick = () => {
+  const handleClick = () => {
     setPersonSociallyDistanced(id);
   };
   return (
@@ -15,10 +15,7 @@ function Person({ size, position, move, personData, setPersonSociallyDistanced }
         size={size}
         position={position}
         onClick={move}
-        onContextMenu={e => {
-          e.preventDefault();
-          handleRightClick();
-        }}
+        onClick={handleClick}
       />
       {personData.mobility === 'SOCIALLY_DISTANCED' && (
         <SociallyDistancedSquare size={size} position={position} {...personData} />
