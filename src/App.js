@@ -118,7 +118,8 @@ function App() {
             person.location.x === infectionZone.x && person.location.y === infectionZone.y
         )
       ) {
-        person.infectedDay = day;
+        const chanceOfGettingInfected = person.mobility === 'SOCIALLY_DISTANCED' ? 0.5 : 1;
+        if (Math.random() <= chanceOfGettingInfected) person.infectedDay = day;
       }
       return person;
     });
