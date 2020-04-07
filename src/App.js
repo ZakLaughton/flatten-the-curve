@@ -200,9 +200,11 @@ function App() {
       />
       <p>Infected: {infectedPeopleCount}</p>
       <p>Recovered: {curedPeopleCount}</p>
-      <GraphContainer>
-        <Graph infectedPeopleData={infectedPeopleData} totalPeopleCount={totalPeopleCount} />
-      </GraphContainer>
+      <Graph
+        day={day}
+        infectedPeopleData={infectedPeopleData}
+        totalPeopleCount={totalPeopleCount}
+      />
     </>
   );
 }
