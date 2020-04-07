@@ -179,6 +179,26 @@ function App() {
     .length;
   const curedPeopleCount = people.filter((person) => person.isCured).length;
   const totalPeopleCount = people.length;
+
+  const initialCurveStats = [
+    {
+      id: 'Infected',
+      color: 'hsl(289, 70%, 50%)',
+      data: [
+        { x: 0, y: 0 },
+        { x: 5, y: 50 },
+        { x: 10, y: 300 },
+      ],
+    },
+  ];
+
+  const [curveStats, setCurveStats] = useState(initialCurveStats);
+
+  // useEffect(() => {
+  //   const newInfectedPeopleData = curveStats[0].data.concat({ x: day, y: infectedPeopleCount });
+  //   setCurveStats;
+  // }, [infectedPeopleCount]);
+
   return (
     <>
       <GameBoard
@@ -191,7 +211,7 @@ function App() {
       <p>Infected: {infectedPeopleCount}</p>
       <p>Recovered: {curedPeopleCount}</p>
       <GraphContainer>
-        <Graph />
+        <Graph data={curveStats} totalPeopleCount={totalPeopleCount} />
       </GraphContainer>
     </>
   );

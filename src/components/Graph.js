@@ -63,12 +63,18 @@ const hardcodedData = [
     ],
   },
 ];
-const Graph = ({ data /* see data tab */ }) => (
+const Graph = ({ data, totalPeopleCount }) => (
   <ResponsiveLine
-    data={hardcodedData}
+    data={data}
     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
     xScale={{ type: 'point' }}
-    yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
+    yScale={{
+      type: 'linear',
+      min: 'auto',
+      max: 'auto',
+      stacked: true,
+      reverse: false,
+    }}
     curve='cardinal'
     axisTop={null}
     axisRight={null}
@@ -77,7 +83,7 @@ const Graph = ({ data /* see data tab */ }) => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'transportation',
+      legend: 'days',
       legendOffset: 36,
       legendPosition: 'middle',
     }}
@@ -99,7 +105,7 @@ const Graph = ({ data /* see data tab */ }) => (
     pointLabel='y'
     pointLabelYOffset={-12}
     enableArea={true}
-    areaOpacity={0.5}
+    areaOpacity={1}
     useMesh={true}
     legends={[
       {
