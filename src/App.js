@@ -183,7 +183,7 @@ function App() {
   const initialCurveStats = [
     {
       id: 'Infected',
-      color: 'hsl(289, 70%, 50%)',
+      color: 'hsl(354, 98%, 50%)',
       data: [
         { x: 0, y: 0 },
         { x: 5, y: 50 },

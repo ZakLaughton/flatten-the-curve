@@ -96,7 +96,7 @@ const Graph = ({ data, totalPeopleCount }) => (
       legendOffset: -40,
       legendPosition: 'middle',
     }}
-    colors={{ scheme: 'nivo' }}
+    colors={['red']}
     enablePoints={false}
     pointSize={10}
     pointColor={{ theme: 'background' }}
