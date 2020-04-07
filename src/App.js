@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import GameBoard from './components/GameBoard';
+import Graph from './components/Graph';
 import { shuffleArray } from './utils/utils';
 import './App.css';
+import styled from 'styled-components';
 
 function App() {
   const gridSize = 25;
@@ -19,7 +21,7 @@ function App() {
   }
   function setPersonMobility(id, mobility) {
     const newPeople = [...people];
-    const personIndex = people.findIndex(person => person.id === id);
+    const personIndex = people.findIndex((person) => person.id === id);
     newPeople[personIndex].mobility = mobility;
     setPeople(newPeople);
     goToNextDay();
@@ -35,24 +37,24 @@ function App() {
       { direction: 'S', coordinates: { x: x + 0, y: y - 1 } },
       { direction: 'SW', coordinates: { x: x - 1, y: y - 1 } },
       { direction: 'W', coordinates: { x: x - 1, y: y + 0 } },
-      { direction: 'NW', coordinates: { x: x - 1, y: y + 1 } }
+      { direction: 'NW', coordinates: { x: x - 1, y: y + 1 } },
     ];
 
     if (isOnLeftEdge(location))
       surroundingCells = surroundingCells.filter(
-        move => !['NW', 'W', 'SW'].includes(move.direction)
+        (move) => !['NW', 'W', 'SW'].includes(move.direction)
       );
     if (isOnBottomEdge(location))
       surroundingCells = surroundingCells.filter(
-        move => !['SW', 'S', 'SE'].includes(move.direction)
+        (move) => !['SW', 'S', 'SE'].includes(move.direction)
       );
     if (isOnRightEdge(location))
       surroundingCells = surroundingCells.filter(
-        move => !['SE', 'E', 'NE'].includes(move.direction)
+        (move) => !['SE', 'E', 'NE'].includes(move.direction)
       );
     if (isOnTopEdge(location))
       surroundingCells = surroundingCells.filter(
-        move => !['NE', 'N', 'NW'].includes(move.direction)
+        (move) => !['NE', 'N', 'NW'].includes(move.direction)
       );
 
     return surroundingCells;
@@ -71,7 +73,7 @@ function App() {
     }
   }
 
-  const calculateMove = location => {
+  const calculateMove = (location) => {
     const possibleMoves = getSurroundingCells(location);
     const newLocation = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
 
@@ -85,7 +87,7 @@ function App() {
 
       if (
         newPeople.some(
-          person => person.location.x === newLocation.x && person.location.y === newLocation.y
+          (person) => person.location.x === newLocation.x && person.location.y === newLocation.y
         )
       ) {
         newPeople[index] = person;
@@ -100,34 +102,34 @@ function App() {
     setPeople(movedInfectedPeople);
   };
 
-  const infect = people => {
+  const infect = (people) => {
     let peopleCopy = [...people];
     const peopleToRecover = peopleCopy
       .filter(
-        person => person.infectedDay !== -1 && !person.isCured && day - person.infectedDay > 19
+        (person) => person.infectedDay !== -1 && !person.isCured && day - person.infectedDay > 19
       )
-      .map(person => person.id);
-    peopleCopy = peopleCopy.map(person => {
+      .map((person) => person.id);
+    peopleCopy = peopleCopy.map((person) => {
       if (peopleToRecover.includes(person.id)) person.isCured = true;
       return person;
     });
 
     const contagiousPeople = people.filter(
-      person => person.infectedDay >= 0 && !person.isCured && person.mobility !== 'QUARANTINED'
+      (person) => person.infectedDay >= 0 && !person.isCured && person.mobility !== 'QUARANTINED'
     );
-    let infectionZones = contagiousPeople.map(person => {
+    let infectionZones = contagiousPeople.map((person) => {
       const neighborLocations = getSurroundingCells(person.location)
-        .filter(location => ['N', 'E', 'S', 'W'].includes(location.direction))
-        .map(surroundingCell => surroundingCell.coordinates);
+        .filter((location) => ['N', 'E', 'S', 'W'].includes(location.direction))
+        .map((surroundingCell) => surroundingCell.coordinates);
 
       return neighborLocations;
     });
     infectionZones = infectionZones.flat();
-    const newlyInfectedPeople = people.map(person => {
+    const newlyInfectedPeople = people.map((person) => {
       if (
         person.infectedDay === -1 &&
         infectionZones.some(
-          infectionZone =>
+          (infectionZone) =>
             person.location.x === infectionZone.x && person.location.y === infectionZone.y
         )
       ) {
@@ -161,7 +163,7 @@ function App() {
           location,
           infectedDay: -1,
           isCured: false,
-          mobility: 'FREE'
+          mobility: 'FREE',
         };
       });
       return people;
@@ -173,9 +175,10 @@ function App() {
     setPeople(initialPeople);
   }, []);
 
-  const infectedPeopleCount = people.filter(person => !person.isCured && person.infectedDay >= 0)
+  const infectedPeopleCount = people.filter((person) => !person.isCured && person.infectedDay >= 0)
     .length;
-  const curedPeopleCount = people.filter(person => person.isCured).length;
+  const curedPeopleCount = people.filter((person) => person.isCured).length;
+  const totalPeopleCount = people.length;
   return (
     <>
       <GameBoard
@@ -187,7 +190,14 @@ function App() {
       />
       <p>Infected: {infectedPeopleCount}</p>
       <p>Recovered: {curedPeopleCount}</p>
+      <GraphContainer>
+        <Graph />
+      </GraphContainer>
     </>
   );
 }
+
+const GraphContainer = styled.div`
+  height: 500px;
+`;
 export default App;
