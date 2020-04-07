@@ -178,26 +178,16 @@ function App() {
   const infectedPeopleCount = people.filter((person) => !person.isCured && person.infectedDay >= 0)
     .length;
   const curedPeopleCount = people.filter((person) => person.isCured).length;
-  const totalPeopleCount = people.length;
+  const totalPeopleCount = people.length || 100;
 
-  const initialCurveStats = [
-    {
-      id: 'Infected',
-      color: 'hsl(354, 98%, 50%)',
-      data: [
-        { x: 0, y: 0 },
-        { x: 5, y: 50 },
-        { x: 10, y: 300 },
-      ],
-    },
-  ];
+  const initialInfectedPeopleData = [{ x: 0, y: 0 }];
 
-  const [curveStats, setCurveStats] = useState(initialCurveStats);
+  const [infectedPeopleData, setInfectedPeopleData] = useState(initialInfectedPeopleData);
 
-  // useEffect(() => {
-  //   const newInfectedPeopleData = curveStats[0].data.concat({ x: day, y: infectedPeopleCount });
-  //   setCurveStats;
-  // }, [infectedPeopleCount]);
+  useEffect(() => {
+    const newInfectedPeopleData = infectedPeopleData.concat({ x: day, y: infectedPeopleCount });
+    setInfectedPeopleData(newInfectedPeopleData);
+  }, [day]);
 
   return (
     <>
@@ -211,7 +201,7 @@ function App() {
       <p>Infected: {infectedPeopleCount}</p>
       <p>Recovered: {curedPeopleCount}</p>
       <GraphContainer>
-        <Graph data={curveStats} totalPeopleCount={totalPeopleCount} />
+        <Graph infectedPeopleData={infectedPeopleData} totalPeopleCount={totalPeopleCount} />
       </GraphContainer>
     </>
   );
