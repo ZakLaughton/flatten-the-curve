@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 function Person({ size, position, personData, dispatch, day }) {
@@ -10,57 +9,51 @@ function Person({ size, position, personData, dispatch, day }) {
     dispatch({ type: 'UPDATE_PERSON_MOBILITY', payload: { id, mobility: newMobility } });
     dispatch({ type: 'INCREMENT_DAY' });
   };
+
+  // ! styled-components slow this movement to a crawl. Don't use them here
+
+  const personStyle = {
+    height: `${size}px`,
+    width: `${size}px`,
+    backgroundColor: isCured ? '#57c1ff' : isSymptomatic ? '#448844' : 'white',
+    borderRadius: `50%`,
+    position: `absolute`,
+    left: `${position[0]}px`,
+    bottom: `${position[1]}px`,
+    border: infectedDay >= 0 ? '3px solid green' : '1px solid black',
+    boxSizing: `border-box`,
+  };
+
+  const sociallyDistancedSquareStyle = {
+    height: `${size}px`,
+    width: `${size}px`,
+    position: `absolute`,
+    left: `${position[0]}px`,
+    bottom: `${position[1]}px`,
+    border: `3px dashed #595959`,
+    boxSizing: `border-box`,
+  };
+
+  const quarantinedSquareStyle = {
+    height: `${size}px`,
+    width: `${size}px`,
+    position: `absolute`,
+    left: `${position[0]}px`,
+    bottom: `${position[1]}px`,
+    border: `3px solid black`,
+    boxSizing: `border-box`,
+  };
   return (
     <>
-      <PersonCircle
+      <motion.span
         positionTransition={{ duration: 0.5 }}
-        size={size}
-        position={position}
+        style={personStyle}
         onClick={handleClick}
-        isSymptomatic={isSymptomatic}
-        isCured={isCured}
       />
-      {personData.mobility === 'SOCIALLY_DISTANCED' && (
-        <SociallyDistancedSquare size={size} position={position} {...personData} />
-      )}
-      {personData.mobility === 'QUARANTINED' && (
-        <QuarantinedSquare size={size} position={position} {...personData} />
-      )}
+      {personData.mobility === 'SOCIALLY_DISTANCED' && <div style={sociallyDistancedSquareStyle} />}
+      {personData.mobility === 'QUARANTINED' && <div style={quarantinedSquareStyle} />}
     </>
   );
 }
-
-const PersonCircle = styled(motion.span)`
-  height: ${(props) => `${props.size}px`};
-  width: ${(props) => `${props.size}px`};
-  background-color: ${(props) =>
-    props.isCured ? '#57c1ff' : props.isSymptomatic ? '#448844' : 'white'};
-  border-radius: 50%;
-  position: absolute;
-  left: ${(props) => `${props.position[0]}px`};
-  bottom: ${(props) => `${props.position[1]}px`};
-  border: ${(props) => (props.infectedDay >= 0 ? '2px solid green' : ' 1px solid black')};
-  box-sizing: border-box;
-`;
-
-const SociallyDistancedSquare = styled.div`
-  height: ${(props) => `${props.size}px`};
-  width: ${(props) => `${props.size}px`};
-  position: absolute;
-  left: ${(props) => `${props.position[0]}px`};
-  bottom: ${(props) => `${props.position[1]}px`};
-  border: 3px dashed #595959;
-  box-sizing: border-box;
-`;
-
-const QuarantinedSquare = styled.div`
-  height: ${(props) => `${props.size}px`};
-  width: ${(props) => `${props.size}px`};
-  position: absolute;
-  left: ${(props) => `${props.position[0]}px`};
-  bottom: ${(props) => `${props.position[1]}px`};
-  border: 3px solid black;
-  box-sizing: border-box;
-`;
 
 export default Person;
