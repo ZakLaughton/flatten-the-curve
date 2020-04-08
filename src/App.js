@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import styled from 'styled-components';
 import GameBoard from './components/GameBoard';
 import Graph from './components/Graph';
 import { shuffleArray, getInfectedPeopleCount } from './utils/utils';
@@ -60,7 +61,7 @@ function App() {
   const totalPeopleCount = people.length || 100;
 
   return (
-    <>
+    <GameGrid>
       <GameBoard
         {...gameMetrics}
         dispatch={dispatch}
@@ -75,8 +76,13 @@ function App() {
         historicalInfectedCount={historicalInfectedCount}
         totalPeopleCount={totalPeopleCount}
       />
-    </>
+    </GameGrid>
   );
 }
+
+const GameGrid = styled.main`
+  background-color: #454545;
+  color: rgba(255, 255, 255, 0.8);
+`;
 
 export default App;

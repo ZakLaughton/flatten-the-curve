@@ -31,6 +31,7 @@ const Board = styled.div`
   height: ${(props) => `${props.size}px`};
   background-color: #b7b7b7;
   position: relative;
+  margin: auto;
 `;
 
 export default GameBoard;
