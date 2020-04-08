@@ -27,8 +27,8 @@ function GameBoard({ boardSize, gridSize, people, dispatch, day }) {
 }
 
 const Board = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vw;
   max-width: ${(props) => `${props.boardSize}px`};
   max-height: ${(props) => `${props.boardSize}px`};
   background-color: #b7b7b7;

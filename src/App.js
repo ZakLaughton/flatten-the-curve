@@ -53,7 +53,6 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState, init);
   const { day, people, historicalInfectedCount, gridSize, boardSize, peopleDensity } = state;
 
-  const cellSize = boardSize / gridSize;
   const gameMetrics = { gridSize, boardSize, peopleDensity };
 
   const infectedPeopleCount = getInfectedPeopleCount(people);
@@ -61,7 +60,7 @@ function App() {
   const totalPeopleCount = people.length || 100;
 
   return (
-    <GameGrid>
+    <GameGrid boardSize={boardSize}>
       <GameBoard
         {...gameMetrics}
         dispatch={dispatch}
@@ -84,15 +83,16 @@ function App() {
 }
 
 const GameGrid = styled.main`
-  background-color: #454545;
   color: rgba(255, 255, 255, 0.8);
   width: 100vw;
   height: 100vh;
+  max-width: ${(props) => `${props.boardSize}px`};
+  margin: auto;
 `;
 
 const GraphContainer = styled.div`
-  width: 100vw;
-  height: 100vw;
+  width: 200px;
+  height: 200px;
 `;
 
 export default App;
