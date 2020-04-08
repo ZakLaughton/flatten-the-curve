@@ -27,21 +27,21 @@ function Person({ gridSize, personData, dispatch, day }) {
   };
 
   const sociallyDistancedSquareStyle = {
-    // height: `${size}px`,
-    // width: `${size}px`,
+    height: `${100 / gridSize}%`,
+    width: `${100 / gridSize}%`,
     position: `absolute`,
-    left: `${location[0]}px`,
-    bottom: `${location[1]}px`,
+    left: `${(100 / gridSize) * location.x}%`,
+    bottom: `${(100 / gridSize) * location.y}%`,
     border: `3px dashed #595959`,
     boxSizing: `border-box`,
   };
 
   const quarantinedSquareStyle = {
-    // height: `${size}px`,
-    // width: `${size}px`,
+    height: `${100 / gridSize}%`,
+    width: `${100 / gridSize}%`,
     position: `absolute`,
-    left: `${location[0]}px`,
-    bottom: `${location[1]}px`,
+    left: `${(100 / gridSize) * location.x}%`,
+    bottom: `${(100 / gridSize) * location.y}%`,
     border: `3px solid black`,
     boxSizing: `border-box`,
   };
