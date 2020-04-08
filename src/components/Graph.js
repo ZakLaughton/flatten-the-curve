@@ -6,9 +6,9 @@ import {
   YAxis,
   HorizontalGridLines,
   VerticalGridLines,
-  LineSeries,
 } from 'react-vis';
-export const Graph = ({ infectedPeopleData, totalPeopleCount, day }) => {
+
+export const Graph = ({ historicalInfectedCount, totalPeopleCount, day }) => {
   const yDomain = [0, totalPeopleCount];
   const xDomain = [0, day];
   const setXTickValues = () => {
@@ -63,7 +63,7 @@ export const Graph = ({ infectedPeopleData, totalPeopleCount, day }) => {
         tickValues={yTickValues}
         tickFormat={(n) => (n / totalPeopleCount) * 100}
       />
-      <AreaSeries animation data={infectedPeopleData} opacity={0.5} style={{}} color='red' />
+      <AreaSeries animation data={historicalInfectedCount} opacity={0.5} style={{}} color='red' />
     </XYPlot>
   );
 };

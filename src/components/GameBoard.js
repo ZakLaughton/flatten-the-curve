@@ -2,14 +2,14 @@ import React from 'react';
 import Person from './Person';
 import styled from 'styled-components';
 
-function GameBoard({ boardSize, cellSize, people, movePeople, setPersonMobility, day }) {
+function GameBoard({ boardSize, cellSize, people, dispatch, day }) {
   return (
     <Board
       size={boardSize}
-      onContextMenu={e => {
+      onContextMenu={(e) => {
         e.preventDefault();
         // setInterval(movePeople, 400);
-        movePeople();
+        dispatch({ type: 'INCREMENT_DAY' });
       }}
     >
       {people.map((person, index) => (
@@ -18,7 +18,7 @@ function GameBoard({ boardSize, cellSize, people, movePeople, setPersonMobility,
           key={index}
           size={cellSize}
           position={[person.location.x * cellSize, person.location.y * cellSize]}
-          setPersonMobility={setPersonMobility}
+          dispatch={dispatch}
           day={day}
         />
       ))}
@@ -27,8 +27,8 @@ function GameBoard({ boardSize, cellSize, people, movePeople, setPersonMobility,
 }
 
 const Board = styled.div`
-  width: ${props => `${props.size}px`};
-  height: ${props => `${props.size}px`};
+  width: ${(props) => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
   background-color: #b7b7b7;
   position: relative;
 `;

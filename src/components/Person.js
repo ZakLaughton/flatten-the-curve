@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-function Person({ size, position, personData, setPersonMobility, day }) {
+function Person({ size, position, personData, dispatch, day }) {
   const { id, infectedDay, isCured } = personData;
   const isSymptomatic = !isCured && infectedDay >= 0 && day - infectedDay >= 5;
   const handleClick = () => {
-    if (isSymptomatic) setPersonMobility(id, 'QUARANTINED');
-    if (!isSymptomatic) setPersonMobility(id, 'SOCIALLY_DISTANCED');
+    const newMobility = isSymptomatic ? 'QUARANTINED' : 'SOCIALLY_DISTANCED';
+    dispatch({ type: 'UPDATE_PERSON_MOBILITY', payload: { id, mobility: newMobility } });
+    dispatch({ type: 'INCREMENT_DAY' });
   };
   return (
     <>
@@ -30,34 +31,34 @@ function Person({ size, position, personData, setPersonMobility, day }) {
 }
 
 const PersonCircle = styled(motion.span)`
-  height: ${props => `${props.size}px`};
-  width: ${props => `${props.size}px`};
-  background-color: ${props =>
+  height: ${(props) => `${props.size}px`};
+  width: ${(props) => `${props.size}px`};
+  background-color: ${(props) =>
     props.isCured ? '#57c1ff' : props.isSymptomatic ? '#448844' : 'white'};
   border-radius: 50%;
   position: absolute;
-  left: ${props => `${props.position[0]}px`};
-  bottom: ${props => `${props.position[1]}px`};
-  border: ${props => (props.infectedDay >= 0 ? '2px solid green' : ' 1px solid black')};
+  left: ${(props) => `${props.position[0]}px`};
+  bottom: ${(props) => `${props.position[1]}px`};
+  border: ${(props) => (props.infectedDay >= 0 ? '2px solid green' : ' 1px solid black')};
   box-sizing: border-box;
 `;
 
 const SociallyDistancedSquare = styled.div`
-  height: ${props => `${props.size}px`};
-  width: ${props => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
+  width: ${(props) => `${props.size}px`};
   position: absolute;
-  left: ${props => `${props.position[0]}px`};
-  bottom: ${props => `${props.position[1]}px`};
+  left: ${(props) => `${props.position[0]}px`};
+  bottom: ${(props) => `${props.position[1]}px`};
   border: 3px dashed #595959;
   box-sizing: border-box;
 `;
 
 const QuarantinedSquare = styled.div`
-  height: ${props => `${props.size}px`};
-  width: ${props => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
+  width: ${(props) => `${props.size}px`};
   position: absolute;
-  left: ${props => `${props.position[0]}px`};
-  bottom: ${props => `${props.position[1]}px`};
+  left: ${(props) => `${props.position[0]}px`};
+  bottom: ${(props) => `${props.position[1]}px`};
   border: 3px solid black;
   box-sizing: border-box;
 `;
