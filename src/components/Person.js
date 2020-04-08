@@ -13,8 +13,8 @@ function Person({ gridSize, personData, dispatch, day }) {
   // ! styled-components slow this movement to a crawl. Don't use them here
 
   const personStyle = {
-    height: `${100 / gridSize}vw`,
-    width: `${100 / gridSize}vw`,
+    height: `${100 / gridSize}%`,
+    width: `${100 / gridSize}%`,
     backgroundColor: isCured ? '#57c1ff' : isSymptomatic ? '#448844' : 'white',
     borderRadius: `50%`,
     position: `absolute`,
