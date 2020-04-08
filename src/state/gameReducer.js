@@ -65,14 +65,19 @@ export default function reducer(state, { type, payload }) {
         return newlyInfectedPeople;
       }
       const movedInfectedPeople = infect(movedPeople);
+      const newInfectedPeopleCount = getInfectedPeopleCount(movedInfectedPeople);
+      const infectedPercentage = (newInfectedPeopleCount / state.people.length) * 100;
+
       return {
         ...state,
         day: newDayNumber,
         people: movedInfectedPeople,
         historicalInfectedCount: [
           ...state.historicalInfectedCount,
-          { day: newDayNumber, count: getInfectedPeopleCount(movedInfectedPeople) },
+          { day: newDayNumber, count: newInfectedPeopleCount },
         ],
+        topOfTheCurve:
+          infectedPercentage > state.topOfTheCurve ? infectedPercentage : state.topOfTheCurve,
       };
 
     case 'UPDATE_PERSON_MOBILITY':

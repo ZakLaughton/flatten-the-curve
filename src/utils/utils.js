@@ -13,3 +13,8 @@ export function shuffleArray(arrayToShuffle) {
 export function getInfectedPeopleCount(people) {
   return people.filter((person) => !person.isCured && person.infectedDay >= 0).length;
 }
+
+// TODO: Make this
+// export function isSymptomatic(person, day) {
+//   return !person.isCured && person.infectedDay >= 0 && day - person.infectedDay >= 5;
+// }

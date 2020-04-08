@@ -13,7 +13,8 @@ function App() {
     historicalInfectedCount: [{ day: 0, count: 0 }],
     gridSize: 25,
     boardSize: 700,
-    peopleDensity: 0.3,
+    peopleDensity: 0.2,
+    topOfTheCurve: 0,
   };
 
   function init(initialState) {
@@ -51,13 +52,28 @@ function App() {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState, init);
-  const { day, people, historicalInfectedCount, gridSize, boardSize, peopleDensity } = state;
+  const {
+    day,
+    people,
+    historicalInfectedCount,
+    gridSize,
+    boardSize,
+    peopleDensity,
+    topOfTheCurve,
+  } = state;
 
   const gameMetrics = { gridSize, boardSize, peopleDensity };
 
   const infectedPeopleCount = getInfectedPeopleCount(people);
+  const symptomaticCount = people.filter(
+    ({ isCured, infectedDay }) => !isCured && infectedDay >= 0 && day - infectedDay >= 5
+  ).length;
+  const totalPeopleCount = people.length;
   const curedPeopleCount = people.filter((person) => person.isCured).length;
-  const totalPeopleCount = people.length || 100;
+
+  const infectedPercentage = `${Math.floor((infectedPeopleCount / totalPeopleCount) * 100)}%`;
+  const symptomaticPercentage = `${Math.floor((symptomaticCount / totalPeopleCount) * 100)}%`;
+  const curedPercentage = `${Math.floor((curedPeopleCount / totalPeopleCount) * 100)}%`;
 
   return (
     <GameGrid boardSize={boardSize}>
@@ -69,8 +85,18 @@ function App() {
         gridSize={gridSize}
         boardSize={boardSize}
       />
-      <p>Infected: {infectedPeopleCount}</p>
-      <p>Recovered: {curedPeopleCount}</p>
+      <Stats>
+        <div>
+          Infected: <span style={{ color: `red` }}>{infectedPercentage}</span>
+        </div>
+        <div>
+          Symptomatic: <span style={{ color: `#448844` }}>{symptomaticPercentage}</span>
+        </div>
+        <div>
+          Recovered: <span style={{ color: `#57c1ff` }}>{curedPercentage}</span>
+        </div>
+      </Stats>
+      <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
       <GraphContainer>
         <Graph
           day={day}
@@ -88,6 +114,21 @@ const GameGrid = styled.main`
   height: 100vh;
   max-width: ${(props) => `${props.boardSize}px`};
   margin: auto;
+`;
+
+const Stats = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  font-size: 2rem;
+`;
+
+const TopOfTheCurve = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  font-size: 4rem;
+  font-weight: 500;
 `;
 
 const GraphContainer = styled.div`
