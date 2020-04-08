@@ -13,7 +13,7 @@ function Person({ size, position, personData, dispatch, day }) {
   return (
     <>
       <PersonCircle
-        positionTransition={{ duration: 1 }}
+        positionTransition={{ duration: 0.5 }}
         size={size}
         position={position}
         onClick={handleClick}
