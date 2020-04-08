@@ -67,15 +67,17 @@ function App() {
         dispatch={dispatch}
         people={people}
         day={day}
-        cellSize={cellSize}
+        gridSize={gridSize}
       />
       <p>Infected: {infectedPeopleCount}</p>
       <p>Recovered: {curedPeopleCount}</p>
-      <Graph
-        day={day}
-        historicalInfectedCount={historicalInfectedCount}
-        totalPeopleCount={totalPeopleCount}
-      />
+      <GraphContainer>
+        <Graph
+          day={day}
+          historicalInfectedCount={historicalInfectedCount}
+          totalPeopleCount={totalPeopleCount}
+        />
+      </GraphContainer>
     </GameGrid>
   );
 }
@@ -83,6 +85,13 @@ function App() {
 const GameGrid = styled.main`
   background-color: #454545;
   color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+`;
+
+const GraphContainer = styled.div`
+  width: 100vw;
+  height: 100vw;
 `;
 
 export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  XYPlot,
+  FlexibleXYPlot,
   AreaSeries,
   XAxis,
   YAxis,
@@ -35,15 +35,7 @@ export const Graph = ({ historicalInfectedCount, totalPeopleCount, day }) => {
   const yTickValues = setYTickValues();
 
   return (
-    <XYPlot
-      animation
-      stackBy='y'
-      height={400}
-      width={400}
-      yDomain={yDomain}
-      xDomain={xDomain}
-      curve='curveCardinal'
-    >
+    <FlexibleXYPlot animation stackBy='y' yDomain={yDomain} xDomain={xDomain} curve='curveCardinal'>
       <VerticalGridLines />
       <HorizontalGridLines />
       <XAxis
@@ -67,7 +59,7 @@ export const Graph = ({ historicalInfectedCount, totalPeopleCount, day }) => {
         tickFormat={(n) => (n / totalPeopleCount) * 100}
       />
       <AreaSeries animation data={infectedGraphData} opacity={0.5} style={{}} color='red' />
-    </XYPlot>
+    </FlexibleXYPlot>
   );
 };
 
