@@ -134,14 +134,15 @@ const Stats = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-  font-size: 2rem;
+  font-size: 1.2rem;
+  flex-wrap: wrap;
 `;
 
 const TopOfTheCurve = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: 500;
 `;
 
