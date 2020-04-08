@@ -11,7 +11,7 @@ const ARRAY_SEARCH_RESULT_NOT_FOUND = -1;
 
 function initializeReactGA() {
   if (document.location.hostname.search(`zaklaughton.dev`) !== ARRAY_SEARCH_RESULT_NOT_FOUND) {
-    ReactGA.initialize(`UA-67511792-3`);
+    ReactGA.initialize(`UA-67511792-5`);
     ReactGA.pageview(`/`);
   }
 }
