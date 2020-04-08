@@ -77,6 +77,23 @@ function App() {
 
   return (
     <GameGrid boardSize={boardSize}>
+      <h1 style={{ fontSize: `1.3rem` }}>
+        <center>FLATTEN THE CURVE (beta) – See how low you can keep the curve!</center>
+      </h1>
+      <p>
+        <center>One person is infected. Symptoms show on day 5. Recovery happens on day 19.</center>
+      </p>
+      <p>
+        <center>Select people to social distance (can't move, lower chance of infection).</center>
+      </p>
+      <p>
+        <center>
+          Select symptomatic people to quarantine (can't move, no chance of infecting others).
+        </center>
+      </p>
+      <p>
+        <center>Refresh the page to restart.</center>
+      </p>
       <GameBoard
         {...gameMetrics}
         dispatch={dispatch}
