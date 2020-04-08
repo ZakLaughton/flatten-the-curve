@@ -23,8 +23,8 @@ export default function reducer(state, { type, payload }) {
       }, state.people);
 
       // Infect
-      function infect(people) {
-        let peopleCopy = [...people];
+      function infect() {
+        let peopleCopy = [...state.people];
         const peopleToRecover = peopleCopy
           .filter(
             (person) =>
@@ -36,7 +36,7 @@ export default function reducer(state, { type, payload }) {
           return person;
         });
 
-        const contagiousPeople = people.filter(
+        const contagiousPeople = state.people.filter(
           (person) =>
             person.infectedDay >= 0 && !person.isCured && person.mobility !== 'QUARANTINED'
         );
@@ -48,7 +48,7 @@ export default function reducer(state, { type, payload }) {
           return neighborLocations;
         });
         infectionZones = infectionZones.flat();
-        const newlyInfectedPeople = people.map((person) => {
+        const newlyInfectedPeople = state.people.map((person) => {
           if (
             person.infectedDay === -1 &&
             infectionZones.some(

@@ -20,7 +20,9 @@ function Person({ size, position, personData, dispatch, day }) {
     position: `absolute`,
     left: `${position[0]}px`,
     bottom: `${position[1]}px`,
-    border: infectedDay >= 0 ? '3px solid green' : '1px solid black',
+    border: '1px solid black',
+    // Use to reveal all infected for debugging:
+    // border: infectedDay >= 0 ? '3px solid green' : '1px solid black',
     boxSizing: `border-box`,
   };
 
@@ -46,7 +48,7 @@ function Person({ size, position, personData, dispatch, day }) {
   return (
     <>
       <motion.span
-        positionTransition={{ duration: 0.5 }}
+        positionTransition={{ duration: 0.4 }}
         style={personStyle}
         onClick={handleClick}
       />
