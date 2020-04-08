@@ -13,7 +13,7 @@ function App() {
     historicalInfectedCount: [{ day: 0, count: 0 }],
     gridSize: 25,
     boardSize: 700,
-    peopleDensity: 0.2,
+    peopleDensity: 0.25,
     topOfTheCurve: 0,
   };
 
@@ -81,7 +81,10 @@ function App() {
         <center>FLATTEN THE CURVE (beta) – See how low you can keep the curve!</center>
       </h1>
       <p>
-        <center>One person is infected. Symptoms show on day 5. Recovery happens on day 19.</center>
+        <center>
+          One person starts infected and contagious. Symptoms show on day 5. Recovery happens on day
+          19.
+        </center>
       </p>
       <p>
         <center>Select people to social distance (can't move, lower chance of infection).</center>
