@@ -9,6 +9,9 @@ import {
 } from 'react-vis';
 
 export const Graph = ({ historicalInfectedCount, totalPeopleCount, day }) => {
+  const infectedGraphData = historicalInfectedCount.map(({ day, count }) => {
+    return { x: day, y: count };
+  });
   const yDomain = [0, totalPeopleCount];
   const xDomain = [0, day];
   const setXTickValues = () => {
@@ -63,7 +66,7 @@ export const Graph = ({ historicalInfectedCount, totalPeopleCount, day }) => {
         tickValues={yTickValues}
         tickFormat={(n) => (n / totalPeopleCount) * 100}
       />
-      <AreaSeries animation data={historicalInfectedCount} opacity={0.5} style={{}} color='red' />
+      <AreaSeries animation data={infectedGraphData} opacity={0.5} style={{}} color='red' />
     </XYPlot>
   );
 };
