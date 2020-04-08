@@ -9,3 +9,7 @@ export function shuffleArray(arrayToShuffle) {
   );
   return arrayToShuffle;
 }
+
+export function getInfectedPeopleCount(people) {
+  return people.filter((person) => !person.isCured && person.infectedDay >= 0).length;
+}
