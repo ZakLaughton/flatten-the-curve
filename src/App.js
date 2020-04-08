@@ -1,10 +1,20 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import styled from 'styled-components';
 import GameBoard from './components/GameBoard';
 import Graph from './components/Graph';
 import { shuffleArray, getInfectedPeopleCount } from './utils/utils';
 import reducer from './state/gameReducer';
 import './App.css';
+import ReactGA from 'react-ga';
+
+const ARRAY_SEARCH_RESULT_NOT_FOUND = -1;
+
+function initializeReactGA() {
+  if (document.location.hostname.search(`zaklaughton.dev`) !== ARRAY_SEARCH_RESULT_NOT_FOUND) {
+    ReactGA.initialize(`UA-67511792-3`);
+    ReactGA.pageview(`/`);
+  }
+}
 
 function App() {
   const initialState = {
@@ -16,6 +26,10 @@ function App() {
     peopleDensity: 0.25,
     topOfTheCurve: 0,
   };
+
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   function init(initialState) {
     const { gridSize, peopleDensity } = initialState;
