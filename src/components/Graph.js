@@ -54,14 +54,14 @@ export const Graph = ({ infectedPeopleData, totalPeopleCount, day }) => {
         position='end'
       />
       <YAxis
-        title='infected'
+        title='% infected'
         position='end'
         animation
         attr='y'
         attrAxis='x'
         orientation='left'
         tickValues={yTickValues}
-        tickFormat={(n) => (n / totalPeopleCount) * 100 + '%'}
+        tickFormat={(n) => (n / totalPeopleCount) * 100}
       />
       <AreaSeries animation data={infectedPeopleData} opacity={0.5} style={{}} color='red' />
     </XYPlot>
