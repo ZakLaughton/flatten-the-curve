@@ -2,9 +2,8 @@ import React, { useReducer, useEffect } from "react";
 import styled from "styled-components";
 import GameBoard from "./components/GameBoard";
 import Graph from "./components/Graph";
-import { shuffleArray, getInfectedPeopleCount } from "./utils/utils";
-import reducer from "./state/gameReducer";
-import { motion } from "framer-motion";
+import { getInfectedPeopleCount } from "./utils/utils";
+import reducer, { init } from "./state/gameReducer";
 import "./App.css";
 import ReactGA from "react-ga";
 
@@ -17,54 +16,20 @@ function initializeReactGA() {
   }
 }
 
-function App() {
-  const initialState = {
-    day: 0,
-    people: [],
-    historicalInfectedCount: [{ day: 0, count: 0 }],
-    gridSize: 25,
-    boardSize: 700,
-    peopleDensity: 0.25,
-    topOfTheCurve: 0,
-  };
+export const initialState = {
+  day: 0,
+  people: [],
+  historicalInfectedCount: [{ day: 0, count: 0 }],
+  gridSize: 25,
+  boardSize: 700,
+  peopleDensity: 0.25,
+  topOfTheCurve: 0,
+};
 
+function App() {
   useEffect(() => {
     initializeReactGA();
   }, []);
-
-  function init(initialState) {
-    const { gridSize, peopleDensity } = initialState;
-    const numberOfPeople = Math.floor(gridSize * gridSize * peopleDensity) || 4;
-    const generateInitialPeople = () => {
-      const allPositions = generateAllPositions();
-      let shuffledLocations = shuffleArray(allPositions);
-      const people = shuffledLocations.slice(0, numberOfPeople).map((location, index) => {
-        return {
-          id: index,
-          location,
-          infectedDay: -1,
-          isCured: false,
-          mobility: "FREE",
-        };
-      });
-      return people;
-    };
-
-    function generateAllPositions() {
-      let positionList = [];
-      for (let x = 0; x < gridSize; x++) {
-        for (let y = 0; y < gridSize; y++) {
-          positionList.push({ x, y });
-        }
-      }
-      return positionList;
-    }
-
-    const initialPeople = generateInitialPeople();
-    const indexToInfect = Math.floor(Math.random() * initialPeople.length);
-    initialPeople[indexToInfect].infectedDay = 0;
-    return { ...initialState, people: initialPeople };
-  }
 
   const [state, dispatch] = useReducer(reducer, initialState, init);
   const {
@@ -92,16 +57,12 @@ function App() {
         FLATTEN THE CURVE (beta) – See how low you can keep the curve!
       </h1>
       <p style={{ fontSize: `1.3rem`, textAlign: `center` }}>
-        One person starts infected and contagious. Symptoms show on day 5. Recovery happens on day
-        19.
+        One person starts infected. Symptoms show on day 5.
       </p>
       <p style={{ fontSize: `1.3rem`, textAlign: `center` }}>
-        Select people to social distance (can't move, lower chance of infection).
+        Click or tap people to social distance (won't move, lower chance of infection). Click or tap
+        people with symptoms to quarantine (can't move, no chance of infecting others).
       </p>
-      <p style={{ fontSize: `1.3rem`, textAlign: `center` }}>
-        Select symptomatic people to quarantine (can't move, no chance of infecting others).
-      </p>
-      <p style={{ fontSize: `1.3rem`, textAlign: `center` }}>Refresh the page to restart.</p>
       <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
 
       <GameBoard
@@ -121,6 +82,13 @@ function App() {
         <div>
           Recovered: <span style={{ color: `#57c1ff` }}>{curedPeopleCount}</span>
         </div>
+        <button
+          onClick={() => {
+            dispatch({ type: "RESTART" });
+          }}
+        >
+          Restart
+        </button>
       </Stats>
       <GraphContainer>
         <Graph
