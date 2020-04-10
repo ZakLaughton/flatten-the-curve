@@ -44,14 +44,9 @@ function Person({ gridSize, personData, dispatch, day }) {
     position: `absolute`,
     left: `${(cellSizeInPercent) * location.x}%`,
     bottom: `${(cellSizeInPercent) * location.y}%`,
-    border: `3px solid black`,
+    border: `3px ridge #4c0000`,
     boxSizing: `border-box`,
   };
-
-  // sonst quarntinedSquareBars1 = {
-  //   ...quarantinedSquareStyle,
-
-  // }
 
 
   return (
@@ -62,7 +57,7 @@ function Person({ gridSize, personData, dispatch, day }) {
         onClick={handleClick}
       />
       {personData.mobility === 'SOCIALLY_DISTANCED' && <div style={sociallyDistancedSquareStyle} />}
-      {personData.mobility === 'QUARANTINED' && <div style={quarantinedSquareStyle} />}
+      {personData.mobility === 'QUARANTINED' && <div style={quarantinedSquareStyle}></div>}
     </>
   );
 }
