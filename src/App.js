@@ -4,6 +4,7 @@ import GameBoard from "./components/GameBoard";
 import Graph from "./components/Graph";
 import { shuffleArray, getInfectedPeopleCount } from "./utils/utils";
 import reducer from "./state/gameReducer";
+import { motion } from "framer-motion";
 import "./App.css";
 import ReactGA from "react-ga";
 
@@ -85,10 +86,6 @@ function App() {
   const totalPeopleCount = people.length;
   const curedPeopleCount = people.filter((person) => person.isCured).length;
 
-  const infectedPercentage = `${Math.floor((infectedPeopleCount / totalPeopleCount) * 100)}%`;
-  const symptomaticPercentage = `${Math.floor((symptomaticCount / totalPeopleCount) * 100)}%`;
-  const curedPercentage = `${Math.floor((curedPeopleCount / totalPeopleCount) * 100)}%`;
-
   return (
     <GameGrid boardSize={boardSize}>
       <h1 style={{ fontSize: `1.3rem`, textAlign: `center` }}>
@@ -105,6 +102,8 @@ function App() {
         Select symptomatic people to quarantine (can't move, no chance of infecting others).
       </p>
       <p style={{ fontSize: `1.3rem`, textAlign: `center` }}>Refresh the page to restart.</p>
+      <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
+
       <GameBoard
         {...gameMetrics}
         dispatch={dispatch}
@@ -123,7 +122,6 @@ function App() {
           Recovered: <span style={{ color: `#57c1ff` }}>{curedPeopleCount}</span>
         </div>
       </Stats>
-      <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
       <GraphContainer>
         <Graph
           historicalInfectedCount={historicalInfectedCount}
@@ -161,6 +159,7 @@ const TopOfTheCurve = styled.div`
 const GraphContainer = styled.div`
   width: 200px;
   height: 200px;
+  margin: auto;
 `;
 
 export default App;
