@@ -115,11 +115,12 @@ function App() {
       />
       <Stats>
         <div>
-          <span style={{ color: `red` }}>{infectedPeopleCount}</span> infected (
-          <span style={{ color: `#448844` }}>{symptomaticCount}</span> w/ symptoms)
+          <span style={{ color: `rgba(255, 0, 0, 0.8)` }}>{infectedPeopleCount}</span> infected (
+          <span style={{ color: `#448844` }}>{symptomaticCount}</span>{" "}
+          {symptomaticCount > 1 || symptomaticCount === 0 ? "have" : "has"} symptoms)
         </div>
         <div>
-          Recovered: <span style={{ color: `#57c1ff` }}>{curedPercentage}</span>
+          Recovered: <span style={{ color: `#57c1ff` }}>{curedPeopleCount}</span>
         </div>
       </Stats>
       <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
