@@ -72,7 +72,12 @@ function App() {
         day={day}
         gridSize={gridSize}
         boardSize={boardSize}
-      />
+      >
+        <Graph
+          historicalInfectedCount={historicalInfectedCount}
+          totalPeopleCount={totalPeopleCount}
+        />
+      </GameBoard>
       <Stats>
         <div>
           <span style={{ color: `rgba(255, 0, 0, 0.8)` }}>{infectedPeopleCount}</span> infected (
@@ -90,12 +95,6 @@ function App() {
           Restart
         </button>
       </Stats>
-      <GraphContainer>
-        <Graph
-          historicalInfectedCount={historicalInfectedCount}
-          totalPeopleCount={totalPeopleCount}
-        />
-      </GraphContainer>
     </GameGrid>
   );
 }
@@ -122,12 +121,6 @@ const TopOfTheCurve = styled.div`
   justify-content: space-evenly;
   font-size: 2rem;
   font-weight: 500;
-`;
-
-const GraphContainer = styled.div`
-  width: 200px;
-  height: 200px;
-  margin: auto;
 `;
 
 export default App;
