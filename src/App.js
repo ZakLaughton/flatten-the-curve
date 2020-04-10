@@ -1,11 +1,11 @@
-import React, { useReducer, useEffect } from 'react';
-import styled from 'styled-components';
-import GameBoard from './components/GameBoard';
-import Graph from './components/Graph';
-import { shuffleArray, getInfectedPeopleCount } from './utils/utils';
-import reducer from './state/gameReducer';
-import './App.css';
-import ReactGA from 'react-ga';
+import React, { useReducer, useEffect } from "react";
+import styled from "styled-components";
+import GameBoard from "./components/GameBoard";
+import Graph from "./components/Graph";
+import { shuffleArray, getInfectedPeopleCount } from "./utils/utils";
+import reducer from "./state/gameReducer";
+import "./App.css";
+import ReactGA from "react-ga";
 
 const ARRAY_SEARCH_RESULT_NOT_FOUND = -1;
 
@@ -43,7 +43,7 @@ function App() {
           location,
           infectedDay: -1,
           isCured: false,
-          mobility: 'FREE',
+          mobility: "FREE",
         };
       });
       return people;
@@ -115,10 +115,8 @@ function App() {
       />
       <Stats>
         <div>
-          Infected: <span style={{ color: `red` }}>{infectedPercentage}</span>
-        </div>
-        <div>
-          Symptomatic: <span style={{ color: `#448844` }}>{symptomaticPercentage}</span>
+          <span style={{ color: `red` }}>{infectedPeopleCount}</span> infected (
+          <span style={{ color: `#448844` }}>{symptomaticCount}</span> w/ symptoms)
         </div>
         <div>
           Recovered: <span style={{ color: `#57c1ff` }}>{curedPercentage}</span>
@@ -127,7 +125,6 @@ function App() {
       <TopOfTheCurve>Top of the curve: {Math.floor(topOfTheCurve)}%</TopOfTheCurve>
       <GraphContainer>
         <Graph
-          day={day}
           historicalInfectedCount={historicalInfectedCount}
           totalPeopleCount={totalPeopleCount}
         />
