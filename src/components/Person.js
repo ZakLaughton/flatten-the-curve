@@ -10,16 +10,18 @@ function Person({ gridSize, personData, dispatch, day }) {
     dispatch({ type: 'INCREMENT_DAY' });
   };
 
+  const cellSizeInPercent = 100 / gridSize
+
   // ! styled-components slow this movement to a crawl. Don't use them here
 
   const personStyle = {
-    height: `${100 / gridSize}%`,
-    width: `${100 / gridSize}%`,
+    height: `${cellSizeInPercent}%`,
+    width: `${cellSizeInPercent}%`,
     backgroundColor: isCured ? '#57c1ff' : isSymptomatic ? '#448844' : 'white',
     borderRadius: `50%`,
     position: `absolute`,
-    left: `${(100 / gridSize) * location.x}%`,
-    bottom: `${(100 / gridSize) * location.y}%`,
+    left: `${(cellSizeInPercent) * location.x}%`,
+    bottom: `${(cellSizeInPercent) * location.y}%`,
     border: '1px solid black',
     // Use to reveal all infected for debugging:
     // border: infectedDay >= 0 ? '3px solid green' : '1px solid black',
@@ -27,24 +29,31 @@ function Person({ gridSize, personData, dispatch, day }) {
   };
 
   const sociallyDistancedSquareStyle = {
-    height: `${100 / gridSize}%`,
-    width: `${100 / gridSize}%`,
+    height: `${cellSizeInPercent}%`,
+    width: `${cellSizeInPercent}%`,
     position: `absolute`,
-    left: `${(100 / gridSize) * location.x}%`,
-    bottom: `${(100 / gridSize) * location.y}%`,
+    left: `${(cellSizeInPercent) * location.x}%`,
+    bottom: `${(cellSizeInPercent) * location.y}%`,
     border: `3px dashed #595959`,
     boxSizing: `border-box`,
   };
 
   const quarantinedSquareStyle = {
-    height: `${100 / gridSize}%`,
-    width: `${100 / gridSize}%`,
+    height: `${cellSizeInPercent}%`,
+    width: `${cellSizeInPercent}%`,
     position: `absolute`,
-    left: `${(100 / gridSize) * location.x}%`,
-    bottom: `${(100 / gridSize) * location.y}%`,
+    left: `${(cellSizeInPercent) * location.x}%`,
+    bottom: `${(cellSizeInPercent) * location.y}%`,
     border: `3px solid black`,
     boxSizing: `border-box`,
   };
+
+  // sonst quarntinedSquareBars1 = {
+  //   ...quarantinedSquareStyle,
+
+  // }
+
+
   return (
     <>
       <motion.span
