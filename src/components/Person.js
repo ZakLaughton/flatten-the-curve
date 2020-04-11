@@ -29,6 +29,19 @@ function Person({ gridSize, personData, dispatch, day }) {
     zIndex: 5,
   };
 
+  const personShadow = {
+    height: `${cellSizeInPercent}%`,
+    width: `${cellSizeInPercent}%`,
+    left: `${cellSizeInPercent * location.x}%`,
+    bottom: `${cellSizeInPercent * location.y}%`,
+    borderRadius: `50%`,
+    content: "",
+    position: `absolute`,
+    zIndex: 4,
+    boxSizing: `border-box`,
+    boxShadow: `#0000009c 4px 3px 6px 0px`,
+  };
+
   const sociallyDistancedSquareStyle = {
     height: `${cellSizeInPercent}%`,
     width: `${cellSizeInPercent}%`,
@@ -58,8 +71,13 @@ function Person({ gridSize, personData, dispatch, day }) {
         style={personStyle}
         onClick={handleClick}
       />
-      {personData.mobility === "SOCIALLY_DISTANCED" && <div style={sociallyDistancedSquareStyle} />}
-      {personData.mobility === "QUARANTINED" && <div style={quarantinedSquareStyle}></div>}
+      {personData.mobility === "SOCIALLY_DISTANCED" && (
+        <motion.div positionTransition={{ duration: 0.4 }} style={sociallyDistancedSquareStyle} />
+      )}
+      {personData.mobility === "QUARANTINED" && (
+        <motion.div positionTransition={{ duration: 0.4 }} style={quarantinedSquareStyle} />
+      )}
+      <motion.div positionTransition={{ duration: 0.4 }} style={personShadow} />
     </>
   );
 }
