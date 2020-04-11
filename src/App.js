@@ -22,7 +22,7 @@ export const initialState = {
   historicalInfectedCount: [{ day: 0, count: 0 }],
   gridSize: 25,
   boardSize: 700,
-  peopleDensity: 0.3,
+  peopleDensity: 0.25,
   topOfTheCurve: 0,
 };
 

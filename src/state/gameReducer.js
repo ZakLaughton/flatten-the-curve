@@ -65,9 +65,18 @@ export default function reducer(state, { type, payload }) {
 
         return newlyInfectedPeople;
       }
-      const movedInfectedPeople = infect(movedPeople);
+      let movedInfectedPeople = infect(movedPeople);
       const newInfectedPeopleCount = getInfectedPeopleCount(movedInfectedPeople);
       const infectedPercentage = (newInfectedPeopleCount / state.people.length) * 100;
+
+      // Experimental: auto-quarantine symptomatic people
+      movedInfectedPeople = movedInfectedPeople.map((person) => {
+        const { isCured, infectedDay } = person;
+        if (!isCured && infectedDay >= 0 && newDayNumber - infectedDay >= 5) {
+          person.mobility = "QUARANTINED";
+        }
+        return person;
+      });
 
       return {
         ...state,
