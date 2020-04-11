@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryArea, VictoryChart, VictoryContainer } from "victory";
+import { VictoryArea } from "victory";
 import styled from "styled-components";
 
 export const Graph = ({ historicalInfectedCount, totalPeopleCount }) => {
