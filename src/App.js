@@ -92,7 +92,7 @@ function App() {
             dispatch({ type: "RESTART" });
           }}
         >
-          Restart
+          Reset
         </button>
       </Stats>
     </GameGrid>
